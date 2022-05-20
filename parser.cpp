@@ -370,10 +370,11 @@ void parser::Initializer()
            
             //E();
             string temp4 = E();
-            temp = temp + temp4 + ";";
-            
             if (temp4.size() > 2)
                 helper(temp4);
+            temp = temp + temp4 + ";";
+            
+           
 
             TAC.push_back(temp);
             this->n++;
@@ -631,8 +632,12 @@ void parser::update(vector<string> tokenE)
 {
     int index = 0;
     int i = 0;
-    while (true)
+    bool flag = true;
+
+    flag = true;
+    while (flag == true) // for / symbol
     {
+        flag = false;
         while (tokenE.size() > 2 && i < tokenE.size())
         {
             if (tokenE[i] == "/")
@@ -646,8 +651,8 @@ void parser::update(vector<string> tokenE)
                 tokenE[i + 1] = "";
 
                 TAC.push_back(to_string(this->n) + " " + temp);
-                n++;
-                break;
+                n++; flag = true;
+                break; 
             }
             i++;
         }
@@ -666,6 +671,118 @@ void parser::update(vector<string> tokenE)
         }
     }
     
+    flag = true; i = 0;
+    while (flag == true) // for * symbol
+    {
+        flag = false;
+        while (tokenE.size() > 2 && i < tokenE.size())
+        {
+            if (tokenE[i] == "*")
+            {
+                string temp2 = "t" + to_string(index); index++;
+                string temp = temp2 + "=";
+                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+
+                tokenE[i] = temp2;
+                tokenE[i - 1] = "";
+                tokenE[i + 1] = "";
+
+                TAC.push_back(to_string(this->n) + " " + temp);
+                n++; flag = true;
+                break;
+            }
+            i++;
+        }
+        for (int jj = 0; jj < tokenE.size(); jj++)
+        {
+            if (tokenE[jj] == "")
+            {
+                int kk = 0;
+                for (kk = jj; kk < tokenE.size() - 1; kk++)
+                {
+                    tokenE[kk] = tokenE[kk + 1];
+                }
+                tokenE[kk] = "";
+                tokenE.resize(tokenE.size() - 1);
+            }
+        }
+    }
+
+    flag = true; i = 0;
+    while (flag == true) // for + symbol
+    {
+        flag = false;
+        while (tokenE.size() > 2 && i < tokenE.size())
+        {
+            if (tokenE[i] == "+")
+            {
+                string temp2 = "t" + to_string(index); index++;
+                string temp = temp2 + "=";
+                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+
+                tokenE[i] = temp2;
+                tokenE[i - 1] = "";
+                tokenE[i + 1] = "";
+
+                TAC.push_back(to_string(this->n) + " " + temp);
+                n++; flag = true;
+                break;
+            }
+            i++;
+        }
+        for (int jj = 0; jj < tokenE.size(); jj++)
+        {
+            if (tokenE[jj] == "")
+            {
+                int kk = 0;
+                for (kk = jj; kk < tokenE.size() - 1; kk++)
+                {
+                    tokenE[kk] = tokenE[kk + 1];
+                }
+                tokenE[kk] = "";
+                tokenE.resize(tokenE.size() - 1);
+            }
+        }
+    }
+
+    flag = true; i = 0;
+    while (flag == true) // for - symbol
+    {
+        flag = false;
+        while (tokenE.size() > 2 && i < tokenE.size())
+        {
+            if (tokenE[i] == "-")
+            {
+                string temp2 = "t" + to_string(index); index++;
+                string temp = temp2 + "=";
+                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+
+                tokenE[i] = temp2;
+                tokenE[i - 1] = "";
+                tokenE[i + 1] = "";
+
+                TAC.push_back(to_string(this->n) + " " + temp);
+                n++; flag = true;
+                break;
+            }
+            i++;
+        }
+        for (int jj = 0; jj < tokenE.size(); jj++)
+        {
+            if (tokenE[jj] == "")
+            {
+                int kk = 0;
+                for (kk = jj; kk < tokenE.size() - 1; kk++)
+                {
+                    tokenE[kk] = tokenE[kk + 1];
+                }
+                tokenE[kk] = "";
+                tokenE.resize(tokenE.size() - 1);
+            }
+        }
+    }
+
+
 }
 
 

@@ -1,7 +1,6 @@
-main	 0	 
-x	 	 
-a	 0	 
-de	 0	 
-fg	 0	 
-bc	 0	 
-kl	 0	 
+main	 0	 INT
+x	 0	 INT
+y	 1	 INT
+z	 0	 INT
+i	 0	 INT
+num	 0	 INT

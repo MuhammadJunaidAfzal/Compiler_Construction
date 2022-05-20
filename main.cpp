@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 	//asking for file name as command line arguments
 	if (argc == 2)
 	{
-		parser p("test.mc");
+		parser p("sample_code0.mc");
 		cout << endl << endl << p.start() << endl << endl;
 		
 		//lexer _lexer("sample_code0.mc");

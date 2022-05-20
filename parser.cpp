@@ -3,6 +3,8 @@
 #include<fstream>
 #include<vector>
 
+int index = 0;
+
 void parser::syntax_error()
 {
     cout << "SYNTAX ERROR\n";
@@ -380,9 +382,7 @@ void parser::Initializer()
                 newtemp = temp4;
             }
             temp = to_string(n) + temp + newtemp + ";";
-            
-           
-
+                  
             TAC.push_back(temp);
             this->n++;
 
@@ -452,9 +452,20 @@ string parser::Initializer2()
 string parser::EXP1()
 {
     string temp, temp1, temp2;
+    string newtemp, newtemp2;
     temp = E();
     temp1 = RO();
     temp2 = E();
+
+    if (temp.size() > 2)
+    {
+        temp = newtemp = helper(temp);
+    }
+    if (temp2.size() > 2)
+    {
+        temp2 = newtemp2 = helper(temp2);
+    }
+
 
     temp = temp + temp1 + temp2;
 
@@ -633,15 +644,13 @@ string parser::helper(string str)
         cout << tokenE[i] << endl;
     }
     string finalans;
-    if (tokenE.size() > 2)
-    {
+   
        finalans = update(tokenE);
-    }
+  
     return finalans;
 }
 string parser::update(vector<string> tokenE)
 {
-    int index = 0;
     int i = 0;
     bool flag = true;
 
@@ -655,11 +664,11 @@ string parser::update(vector<string> tokenE)
             {
                 string temp2 = "t" + to_string(index); index++;
                 string temp = temp2 + "=";
-                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+                temp = temp + tokenE[i-1] + tokenE[i] + tokenE[i+1];
 
                 tokenE[i] = temp2;
-                tokenE[i - 1] = "";
-                tokenE[i + 1] = "";
+                tokenE[i-1] = "";
+                tokenE[i+1] = "";
 
                 TAC.push_back(to_string(this->n) + " " + temp);
                 n++; flag = true;
@@ -674,7 +683,7 @@ string parser::update(vector<string> tokenE)
                 int kk = 0;
                 for (kk = jj; kk < tokenE.size() - 1; kk++)
                 {
-                    tokenE[kk] = tokenE[kk + 1];
+                    tokenE[kk] = tokenE[kk+1];
                 }
                 tokenE[kk] = "";
                 tokenE.resize(tokenE.size() - 1);

@@ -1,6 +1,7 @@
 #include "parser.h"
 #include<string>
 #include<fstream>
+#include<vector>
 
 void parser::syntax_error()
 {
@@ -98,15 +99,12 @@ bool parser::start()
     {
         ofstream file;
         file.open("TAC.txt");
-
         if (file.is_open())
         {
             for (int i = 0; i < TAC.size(); i++)
             {
                 cout << " " << TAC[i] << endl;
                 file << TAC[i] << endl;
-
-
             }
         }
         else
@@ -371,7 +369,12 @@ void parser::Initializer()
             expect(TokenType::ASSIGNMENT);
            
             //E();
-            temp = temp + E() + ";";
+            string temp4 = E();
+            temp = temp + temp4 + ";";
+            
+            if (temp4.size() > 2)
+                helper(temp4);
+
             TAC.push_back(temp);
             this->n++;
 
@@ -487,10 +490,12 @@ string parser::RO()
 string parser::E()
 {
     string temp,temp1,temp2;
+
     temp1 = T(); 
     temp2 = E1();
-
     temp = temp1 + temp2;
+
+
     return temp;
 }
 string parser::T()
@@ -501,6 +506,7 @@ string parser::T()
     temp2 = T1();
 
     temp = temp1 + temp2;
+
     return temp;
 }
 string parser::E1()
@@ -578,6 +584,99 @@ string parser::F()
     temp = temp1 + temp2;
     return temp;
 }
+void parser::helper(string str)
+{
+    vector<string> tokenE;
+
+    int start = 0, end = 0;
+    int i = 0, j = 0, k = 0;
+
+    while (i < str.size())
+    {
+        string temp1; 
+        if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
+        {
+            temp1 = temp1 + str[i];
+            tokenE.push_back(temp1);
+            i++;
+        }
+        else
+        {
+            start = i; j = 0;
+            while (i < str.size())
+            {
+                if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
+                    break;
+                i++; j++;
+            }
+            end = start + j;
+            k = start; string temp;
+            while (k < end)
+            {
+                temp = temp + str[k]; 
+                k++;
+            }
+            i = end;
+            tokenE.push_back(temp);
+        }
+    }
+    for (int i = 0; i < tokenE.size(); i++)
+    {
+        cout << tokenE[i] << endl;
+    }
+    if (tokenE.size() > 3)
+        update(tokenE);
+}
+void parser::update(vector<string> tokenE)
+{
+    int index = 0;
+    int i = 0;
+    while (true)
+    {
+        while (tokenE.size() > 2 && i < tokenE.size())
+        {
+            if (tokenE[i] == "/")
+            {
+                string temp2 = "t" + to_string(index); index++;
+                string temp = temp2 + "=";
+                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+
+                tokenE[i] = temp2;
+                tokenE[i - 1] = "";
+                tokenE[i + 1] = "";
+
+                TAC.push_back(to_string(this->n) + " " + temp);
+                n++;
+                break;
+            }
+            i++;
+        }
+        for (int jj = 0; jj < tokenE.size(); jj++)
+        {
+            if (tokenE[jj] == "")
+            {
+                int kk = 0;
+                for (kk = jj; kk < tokenE.size() - 1; kk++)
+                {
+                    tokenE[kk] = tokenE[kk + 1];
+                }
+                tokenE[kk] = "";
+                tokenE.resize(tokenE.size() - 1);
+            }
+        }
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
 //void parser::EXP3()
 //{
 //    if (_lexer.peek(1).tokenType == TokenType::ID   )

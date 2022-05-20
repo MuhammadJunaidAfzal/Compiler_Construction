@@ -1,3 +1,7 @@
 main	 0	 
-x	 0	 
-y	 0	 
+x	 	 
+a	 0	 
+de	 0	 
+fg	 0	 
+bc	 0	 
+kl	 0	 

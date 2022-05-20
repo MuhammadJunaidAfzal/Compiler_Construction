@@ -3,7 +3,7 @@
 func int main:
 begin # Three address code generation starts after here
 	
-	x <- a + de / fg * bc / kl;
+	x <- a + de / fg * bc / kl + 98 ;
 
 	return x;
 end

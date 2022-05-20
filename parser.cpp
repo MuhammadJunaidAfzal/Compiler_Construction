@@ -360,7 +360,7 @@ void parser::Initializer()
 {
     if (_lexer.peek(1).tokenType == TokenType::ID)
     {
-        string temp = to_string(n) + " " + _lexer.peek(1).lexeme + " = ";
+        string temp = " " + _lexer.peek(1).lexeme + " = ";
 
         expect(TokenType::ID);
 
@@ -369,10 +369,17 @@ void parser::Initializer()
             expect(TokenType::ASSIGNMENT);
            
             //E();
+            string newtemp;
             string temp4 = E();
-            if (temp4.size() > 2)
-                helper(temp4);
-            temp = temp + temp4 + ";";
+            if (temp4.size() >= 2)
+            {
+                newtemp = helper(temp4);
+            }
+            else
+            {
+                newtemp = temp4;
+            }
+            temp = to_string(n) + temp + newtemp + ";";
             
            
 
@@ -585,7 +592,7 @@ string parser::F()
     temp = temp1 + temp2;
     return temp;
 }
-void parser::helper(string str)
+string parser::helper(string str)
 {
     vector<string> tokenE;
 
@@ -594,7 +601,7 @@ void parser::helper(string str)
 
     while (i < str.size())
     {
-        string temp1; 
+        string temp1;
         if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
         {
             temp1 = temp1 + str[i];
@@ -614,7 +621,7 @@ void parser::helper(string str)
             k = start; string temp;
             while (k < end)
             {
-                temp = temp + str[k]; 
+                temp = temp + str[k];
                 k++;
             }
             i = end;
@@ -625,10 +632,14 @@ void parser::helper(string str)
     {
         cout << tokenE[i] << endl;
     }
-    if (tokenE.size() > 3)
-        update(tokenE);
+    string finalans;
+    if (tokenE.size() > 2)
+    {
+       finalans = update(tokenE);
+    }
+    return finalans;
 }
-void parser::update(vector<string> tokenE)
+string parser::update(vector<string> tokenE)
 {
     int index = 0;
     int i = 0;
@@ -782,7 +793,7 @@ void parser::update(vector<string> tokenE)
         }
     }
 
-
+    return tokenE[0];
 }
 
 

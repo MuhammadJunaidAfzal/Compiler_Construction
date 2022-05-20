@@ -51,8 +51,8 @@ public:
     void Initializer();
     string Initializer2();
 
-    void helper(string str);
-    void update(vector<string> tokenE);
+    string helper(string str);
+    string update(vector<string> tokenE);
     
 };
 

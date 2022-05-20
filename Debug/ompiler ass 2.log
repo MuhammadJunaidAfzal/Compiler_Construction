@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(519,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (ompiler ass 2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  parser.cpp
+C:\Users\Admin\source\repos\ompiler ass 2\parser.cpp(104,31): warning C4018: '<': signed/unsigned mismatch
+  ompiler ass 2.vcxproj -> C:\Users\Admin\source\repos\ompiler ass 2\Debug\Compiler Assignment 2.exe

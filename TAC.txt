@@ -1,0 +1,9 @@
+1 if x<y goto 3
+2 goto  5
+3 out "x is less than y";
+4 goto 10
+5 if x>y goto 7
+6 goto  9
+7 out "x is greater than y";
+8 goto 10
+9 out "x is equal to y";

@@ -1,0 +1,11 @@
+﻿  lexer.cpp
+  main.cpp
+  parser.cpp
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(135,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(154,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(184,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(299,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(309,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(347,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  ompiler ass 2.vcxproj -> C:\Users\Admin\source\repos\Compiler_Construction\x64\Debug\Compiler Assignment 2.exe

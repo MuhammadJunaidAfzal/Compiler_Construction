@@ -1,6 +1,13 @@
-main	 0	 INT
-x	 0	 INT
-y	 1	 INT
-z	 0	 INT
-i	 0	 INT
-num	 0	 INT
+main	 0	 
+i	 	 
+a	 0	 
+b	 0	 
+c	 0	 
+d	 0	 
+e	 0	 
+f	 0	 
+g	 0	 
+h	 0	 
+x	 0	 
+z	 	 
+y	 0	 

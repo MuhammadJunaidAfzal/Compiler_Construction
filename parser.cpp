@@ -82,17 +82,7 @@ bool parser::start()
         Initializer();
         //EXP1();
         A();
-        //E();
-       /* expect(TokenType::RETURN);
-        if (_lexer.peek(1).tokenType == TokenType::ID)
-        {
-            expect(TokenType::ID);
-        }
-        else if (_lexer.peek(1).tokenType == TokenType::NUMERIC)
-        {
-            expect(TokenType::NUMERIC);
-        }
-        expect(TokenType::SEMICOLON);*/
+
         expect(TokenType::END);
 
         start();
@@ -122,8 +112,9 @@ bool parser::start()
 void parser::A()
 {
     string temp,temp1; 
-    int if_start_index = 0, if_end = 0, elif_end = 0;
+    int if_start_index = 0, if_end = 0, elif_end = 0, jumpelse = 0;
     bool flag = true;
+    bool elseflag = false;
     if (_lexer.peek(1).tokenType == TokenType::IF)
     {
         temp = to_string(n) + " " + "if ";
@@ -144,8 +135,16 @@ void parser::A()
        
         if (_lexer.peek(1).tokenType != TokenType::ELIF)
         {
-            TAC[if_start_index] = TAC[if_start_index] + " " + to_string(n);
-            flag = false;
+            if (_lexer.peek(1).tokenType == TokenType::ELSE)
+            {
+                TAC[if_start_index] = TAC[if_start_index] + " " + to_string(n+1);
+                flag = false;
+            }
+            else
+            {
+                TAC[if_start_index] = TAC[if_start_index] + " " + to_string(n);
+                flag = false;
+            }
         }
         else  if (_lexer.peek(1).tokenType == TokenType::ELIF)
         {
@@ -155,11 +154,21 @@ void parser::A()
             TAC.push_back(to_string(n) + " goto");
             n++;
         }
+        if (_lexer.peek(1).tokenType == TokenType::ELSE) // if there is no elif, but else after if
+        {
+            elseflag = true;
+            jumpelse = TAC.size();
+
+        }
         B();
         if (flag == true)
         {
             TAC[elif_end] = TAC[elif_end] + " " + to_string(n);
             flag = false;
+        }
+        if (elseflag == true)
+        {
+            TAC[jumpelse] = TAC[jumpelse] + " " + to_string(n+1);
         }
         A();
     }
@@ -444,7 +453,10 @@ string parser::Initializer2()
         expect(TokenType::ASSIGNMENT);
 
         temp1 = E();
-
+        if (temp1.size() >= 2)
+        {
+            temp1 = helper(temp1);
+        }
         temp = temp + temp1;
     }
     return temp;
@@ -603,7 +615,7 @@ string parser::F()
     temp = temp1 + temp2;
     return temp;
 }
-string parser::helper(string str)
+string parser::helper(string str) // this function tokenize the given expression
 {
     vector<string> tokenE;
 
@@ -639,17 +651,17 @@ string parser::helper(string str)
             tokenE.push_back(temp);
         }
     }
-    for (int i = 0; i < tokenE.size(); i++)
+  /*  for (int i = 0; i < tokenE.size(); i++)
     {
         cout << tokenE[i] << endl;
-    }
+    }*/
     string finalans;
    
-       finalans = update(tokenE);
+    finalans = update(tokenE);
   
     return finalans;
 }
-string parser::update(vector<string> tokenE)
+string parser::update(vector<string> tokenE)  // this function splits the expression into smaller parts
 {
     int i = 0;
     bool flag = true;
@@ -808,53 +820,3 @@ string parser::update(vector<string> tokenE)
 
 
 
-
-
-
-
-
-
-//void parser::EXP3()
-//{
-//    if (_lexer.peek(1).tokenType == TokenType::ID   )
-//    {
-//        expect(TokenType::ID);
-//
-//        if (_lexer.peek(1).tokenType == TokenType::MUL)
-//        {
-//            expect(TokenType::MUL);    EXP3();
-//        }
-//        else if (_lexer.peek(1).tokenType == TokenType::DIV)
-//        {
-//            expect(TokenType::DIV);   EXP3();
-//        }
-//    }
-//    else if (_lexer.peek(1).tokenType == TokenType::NUMERIC)
-//    {
-//        expect(TokenType::NUMERIC);
-//
-//        if (_lexer.peek(1).tokenType == TokenType::MUL)
-//        {
-//            expect(TokenType::MUL);    EXP3();
-//        }
-//        else if (_lexer.peek(1).tokenType == TokenType::DIV)
-//        {
-//            expect(TokenType::DIV);   EXP3();
-//        }
-//    }
-//}
-//void parser::EXP2()
-//{
-//    EXP3();
-//    
-//    if (_lexer.peek(1).tokenType == TokenType::ADD)
-//    {
-//        expect(TokenType::ADD);
-//        EXP2();
-//    }
-//    else if (_lexer.peek(1).tokenType == TokenType::SUB)
-//    {
-//        expect(TokenType::SUB);
-//        EXP2();
-//    }
-//}

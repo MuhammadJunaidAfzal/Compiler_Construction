@@ -10,7 +10,7 @@ begin # Three address code generation starts after here
 	num  int;
 	print "Enter the number :";#print 
     in num; #take input
-	if num + x / y < 0:
+	if num < 0:
 	begin
 		print "negative number entered\n";#print
 		return 0;# this statement just halt the program

@@ -3,7 +3,6 @@
 #include<fstream>
 #include<vector>
 
-int index = 0;
 
 void parser::syntax_error()
 {
@@ -13,7 +12,7 @@ void parser::syntax_error()
 token parser::expect(TokenType expected_type)
 {
     token t = _lexer.getNextToken();
-   // t.Print();
+    //t.Print();
     if (t.tokenType != expected_type)
         syntax_error();
     return t;
@@ -263,9 +262,16 @@ void parser::A()
     }
     else if (_lexer.peek(1).tokenType == TokenType::RETURN)
     {
-        string temp = to_string(n) + " ret ";
         expect(TokenType::RETURN);
-        temp = temp + E() + ";";
+
+        string temp1 = E();
+        if(temp1.size()>=2)
+        {
+            temp1 = helper(temp1);
+        }
+
+        string temp = to_string(n) + " ret ";
+        temp = temp + temp1 + ";";
         TAC.push_back(temp);
         n++;
        /* if (_lexer.peek(1).tokenType == TokenType::ID)
@@ -281,8 +287,38 @@ void parser::A()
     else if (_lexer.peek(1).tokenType == TokenType::CALL)
     {
         expect(TokenType::CALL);
+
+        string temp = to_string(n) + " call" + _lexer.peek(1).lexeme;
         expect(TokenType::ID);
-        E();
+
+        int parm = 0;
+       
+        do {
+            if (_lexer.peek(1).lexeme == ",")
+            {
+                expect(TokenType::COMMA);
+            }
+            string temp2 = E();
+            if (temp2.size() > 2)
+            {
+                temp2 = helper(temp2);
+            }
+            if (temp2 != "")
+            {
+                parm++;
+                temp2 = to_string(n) + " parm " + temp2;
+                TAC.push_back(temp2);
+                n++;
+            }
+        } while (_lexer.peek(1).lexeme == ",");
+
+
+        
+
+        temp = temp +", "+ to_string(parm) + ", t" + to_string(index);
+        index++;
+        TAC.push_back(temp);
+        n++;
 
         expect(TokenType::SEMICOLON);
         A();

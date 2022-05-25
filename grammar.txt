@@ -1,28 +1,37 @@
-Start  -> func int var initializer:  begin A  return var end Start | ɛ
+{int n = 1}	// global
 
-A ->  begin A end | if EXP1: begin A end B A |for Initializer ,EXP1 , Initializer2: begin A  end A | print ID ; A | print ‘str’; A | in variable ; A |
-	 Initializer A  | return ID |
+Start  -> func int var initializer: {emit("func","int")} begin A  return var end Start | ɛ
 
-B -> elif EXP1: begin A end  B | C 
+A ->  if  {backpatch(A.t, n)} EXP1:{A.next = n; emit(“goto”)}: begin A end B A |
+		for Initializer ,EXP1 , Initializer2:{A.start = n} {backpatch(A.t, n)}	{emit(“goto”, A.start);backpatch(A.f, n)}begin A  end A | 
+		print ID ; A {emit("print" , ID.lex)}| 
+		print ‘str’; A {emit("print" , str.lex)}| 
+		in variable ; A {emit("in" , variable.lex)}|
+		Initializer A  | return ID {emit("return" , ID.lex)}|
 
-C ->  else: begin A end  
+B -> elif {backpatch(B.t, n)} EXP1:{A.next = n; emit(“goto”)} begin A end  B | C  
+ 
+C ->  else: begin A end   {  C.f = n; emit(“goto” )}  
 
-Initializer ->   var <- EXP2  int ;  Initializer | var int ; Initializer | Initializer2, Initializer |  var ; | var , Initializer | ; 
+Initializer ->   var <- EXP2  int ;  Initializer  emit{  var.lex + "int" + ";"}  | var int ; Initializer  emit{ var.lex + "=" + "int"}| Initializer2, Initializer |  var ; {Initializer.w = var.lex} | var , Initializer {Initializer.w = var.lex} | ;  emit{";"}
 
-Initializer2 ->   ID <- EXP2
+Initializer2 ->   ID <- EXP2   {Initializer2.q  = Id.p + "=" + EXP2.q}  {tmp = newTmp(); emit(tmp, “=”, E1.n, “+”, T.n);E.n = tmp}
 
-EXP1 ->   E RO E  
 
-E ->  T E'
+EXP1 ->   E RO E  {EXP1.t = n; 
+					emit(“if”,E1.lex,RO.lex,E2.lex,”goto”); 
+						BE.f = n; emit(“goto”)}}
 
-E' ->  + T E' | - T E' | ^
+E ->  T E'  {E.z = T.z + E'.z }
 
-T ->  F T'	
+E' ->  + T E'  {E'.w = "+" + T.t + E'.t}  |  {E'.w = "-" + T.t + E'.t} - T E' | ^
 
-T' ->  * F T' | / F T' | ^
+T ->  F T'	{T.q = F.s + T'.s}
 
-F ->  id | num | E 
+T' ->  * F T'  {"*" + F.s + T'.s}  | / F T'  {"/" + F.s + T'.s} | ^   
 
-RO ->  == | != | > | >= | < | <= 
+F ->  id  {F.h = id.lex } | num  {F.h= id.lex}| E {E.h= id.lex}
 
-ID ->  var | num | char
+RO ->  == {RO.v="=="}   |  !=  {RO.v="!="}   | >  {RO.v=">"}  |  >= {RO.v=">="}  | < {RO.v="<"}   | <=  {RO.v="<="}  
+
+ID ->  var  {ID.v=var.lex}| num {ID.v=num.lex} | char{ID.v=char.lex}

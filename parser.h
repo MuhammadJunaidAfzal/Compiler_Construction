@@ -7,6 +7,7 @@ class parser
 {
     lexer _lexer;
     int n=1;
+    int index = 0;
 public:
     vector<string> TAC;
     

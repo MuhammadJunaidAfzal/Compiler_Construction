@@ -5,13 +5,29 @@
 #program to calculate fibonacci series and display on stdout
 func int main:
 begin # Three address code generation starts after here
-	for i<-a +b / c, i<d /e /f ,i<-f+g* h: # loop calculating actual output
-		begin
-			print x;
-			print " ";
-			z <- x + y * 89 / 78; # store sum in z
-			x <- y; #assign value of y to x
-			y <- z; #assign values of z to y
-		end
+	if x<=0:
+begin
+	print "x is less than 0";
+end
+elif x=1:
+begin
+	print "x is equal to 1";
+end
+elif x=2:
+begin
+	print "x is equal to 2";
+end
+elif x=3:
+begin
+	print "x is equal to 3";
+end
+elif x=4:
+begin
+	print "x is equal to 4";
+end
+else:
+begin
+	print "x is greater than 4";
+end
 	return 0;#halts program
 end

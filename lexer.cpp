@@ -321,7 +321,7 @@ lexer::lexer(const char filename[])
         Tokenize();
 
         generateSymbolTable();
-        printSymbolTable();
+       // printSymbolTable();
         generateSymbolTableFile();
         //assigning tokens to iterator::pointer
         index = 0;

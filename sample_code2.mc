@@ -12,7 +12,7 @@ begin # Three address code generation starts after here
 	if num < 0:
 	begin
 		print "negative number entered\n";#print
-		return 0;# this statement just halt the program
+		return a + 2 - 6;# this statement just halt the program
 	end
 	else:
 	begin

@@ -1,9 +1,4 @@
-﻿  parser.cpp
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(125,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(152,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(159,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(192,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(344,36): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(354,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Admin\source\repos\Compiler_Construction\parser.cpp(392,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+﻿  Virtual_machine.cpp
+  main.cpp
+  Generating Code...
   ompiler ass 2.vcxproj -> C:\Users\Admin\source\repos\Compiler_Construction\x64\Debug\Compiler Assignment 2.exe

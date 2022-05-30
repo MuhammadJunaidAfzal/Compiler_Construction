@@ -1,10 +1,6 @@
-calculateFib	 0	 INT
-x	 0	 INT
-y	 1	 INT
-z	 0	 INT
-i	 0	 INT
-n	 0	 INT
-a	 0	 INT
-k	 0	 INT
-main	 0	 INT
-num	 0	 INT
+main	 0	 INT	 20
+x	 0	 INT	 21
+y	 1	 INT	 22
+z	 0	 INT	 23
+i	 0	 INT	 24
+num	 0	 INT	 25

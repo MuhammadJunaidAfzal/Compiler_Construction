@@ -12,7 +12,7 @@ begin # Three address code generation starts after here
 	if num < 0:
 	begin
 		print "negative number entered\n";#print
-		return a + 2 - 6;# this statement just halt the program
+		return 0;# this statement just halt the program
 	end
 	else:
 	begin
@@ -21,7 +21,7 @@ begin # Three address code generation starts after here
 		begin
 			print x;
 			print " ";
-			z <- x + y * 89 / 78; # store sum in z
+			z <- x + y; # store sum in z
 			x <- y; #assign value of y to x
 			y <- z; #assign values of z to y
 		end

@@ -92,10 +92,12 @@ bool parser::start()
         file.open("TAC.txt");
         if (file.is_open())
         {
-            for (int i = 0; i < TAC.size(); i++)
+            file << TAC[0];
+            cout<< TAC[0]<<endl;
+            for (int i = 1; i < TAC.size(); i++)
             {
                 cout << " " << TAC[i] << endl;
-                file << TAC[i] << endl;
+                file <<endl << TAC[i];
             }
         }
         else
@@ -116,14 +118,14 @@ void parser::A()
     bool elseflag = false;
     if (_lexer.peek(1).tokenType == TokenType::IF)
     {
-        temp = to_string(n) + " " + "if ";
+        temp =  + "if ";
         expect(TokenType::IF);
         
         temp = temp + EXP1() + " goto " + to_string(n+2);
         n++; 
         TAC.push_back(temp);
         if_start_index = TAC.size();
-        temp1 = to_string(n) + " " + "goto ";
+        temp1 =  + "goto ";
         TAC.push_back(temp1);
         n++;
 
@@ -150,7 +152,7 @@ void parser::A()
             TAC[if_start_index] = TAC[if_start_index] + " " + to_string(n+1);
             
             elif_end = TAC.size();
-            TAC.push_back(to_string(n) + " goto");
+            TAC.push_back( "goto");
             n++;
         }
         if (_lexer.peek(1).tokenType == TokenType::ELSE) // if there is no elif, but else after if
@@ -178,19 +180,19 @@ void parser::A()
         
         expect(TokenType::FOR);
         
-        temp = to_string(n)+ " " +  Initializer2();
+        temp = Initializer2();
         TAC.push_back(temp);
         n++;
 
         expect(TokenType::COMMA);
-        temp1 = to_string(n) + " " + "if "; 
+        temp1 =  "if "; 
         temp1 = temp1 + EXP1() + " goto " + to_string(n + 2);   
         if_start = n;
         n++;
         TAC.push_back(temp1);
 
         if_start_index = TAC.size();
-        temp1 = to_string(n) + " " + "goto ";
+        temp1 = "goto ";
         TAC.push_back(temp1);
 
         n++;
@@ -201,11 +203,11 @@ void parser::A()
         expect(TokenType::COLON);
         expect(TokenType::BEGIN);
         A();
-        temp2 = to_string(n) + " " + temp2;
+        temp2 = temp2;
         TAC.push_back(temp2);
         n++;
 
-        temp3 = to_string(n) + " goto " + to_string(if_start);
+        temp3 ="goto " + to_string(if_start);
         TAC.push_back(temp3);
         n++;
         expect(TokenType::END);
@@ -218,7 +220,7 @@ void parser::A()
         expect(TokenType::PRINT);
         if (_lexer.peek(1).tokenType == TokenType::ID)
         {
-            string temp = to_string(n)+ " " + "out " + _lexer.peek(1).lexeme + ";";
+            string temp =+ "out " + _lexer.peek(1).lexeme + ";";
            // cout << temp << endl;
             TAC.push_back(temp);
             n++;
@@ -231,7 +233,7 @@ void parser::A()
         }
         else if (_lexer.peek(1).tokenType == TokenType::STRING)
         {
-            string temp = to_string(n) + " " + "out \"" + _lexer.peek(1).lexeme + "\";";
+            string temp = "out \"" + _lexer.peek(1).lexeme + "\";";
           //  cout << temp <<endl;
             TAC.push_back(temp);
             n++;
@@ -251,7 +253,7 @@ void parser::A()
     {
         expect(TokenType::IN);
 
-        string temp = to_string(n) + " " + "in " + _lexer.peek(1).lexeme + ";";
+        string temp = "in " + _lexer.peek(1).lexeme + " ;";
      //   cout << temp << endl;
         TAC.push_back(temp);
         n++;
@@ -270,8 +272,8 @@ void parser::A()
             temp1 = helper(temp1);
         }
 
-        string temp = to_string(n) + " ret ";
-        temp = temp + temp1 + ";";
+        string temp = "ret ";
+        temp = temp + temp1 + " ;";
         TAC.push_back(temp);
         n++;
        /* if (_lexer.peek(1).tokenType == TokenType::ID)
@@ -288,7 +290,7 @@ void parser::A()
     {
         expect(TokenType::CALL);
 
-        string temp = to_string(n) + " call" + _lexer.peek(1).lexeme;
+        string temp =  "call" + _lexer.peek(1).lexeme;
         expect(TokenType::ID);
 
         int parm = 0;
@@ -306,7 +308,7 @@ void parser::A()
             if (temp2 != "")
             {
                 parm++;
-                temp2 = to_string(n) + " parm " + temp2;
+                temp2 = " parm " + temp2;
                 TAC.push_back(temp2);
                 n++;
             }
@@ -333,13 +335,13 @@ void parser::B()
 
     if (_lexer.peek(1).tokenType == TokenType::ELIF)
     {
-        temp = to_string(n) + " " + "if ";
+        temp = "if ";
         expect(TokenType::ELIF);
        // EXP1();
         temp = temp + EXP1() + " goto " + to_string(n + 2); // in case of successfull if statement (jump into if statement)
         n++;
         TAC.push_back(temp);
-        temp1 = to_string(n) + " " + "goto ";
+        temp1 =  "goto ";
 
         if_start_index = TAC.size();
         TAC.push_back(temp1);
@@ -356,7 +358,7 @@ void parser::B()
         if (_lexer.peek(1).tokenType != TokenType::ELSE)
         {
            temp2 = " goto ";
-            TAC.push_back(to_string(n) + temp2);
+            TAC.push_back( temp2);
             n++;
         }
         if (_lexer.peek(1).tokenType != TokenType::ELSE)
@@ -391,7 +393,7 @@ void parser::C()
     {
         if_end = TAC.size();
         temp = " goto";
-        TAC.push_back(to_string(n) + temp);
+        TAC.push_back( temp);
         n++;
 
         expect(TokenType::ELSE);
@@ -407,7 +409,7 @@ void parser::Initializer()
 {
     if (_lexer.peek(1).tokenType == TokenType::ID)
     {
-        string temp = " " + _lexer.peek(1).lexeme + " = ";
+        string temp =_lexer.peek(1).lexeme + " = ";
 
         expect(TokenType::ID);
 
@@ -426,7 +428,7 @@ void parser::Initializer()
             {
                 newtemp = temp4;
             }
-            temp = to_string(n) + temp + newtemp + ";";
+            temp = temp + newtemp + " ;";
                   
             TAC.push_back(temp);
             this->n++;
@@ -485,7 +487,7 @@ string parser::Initializer2()
 
         temp = _lexer.peek(1).lexeme;
         expect(TokenType::ID);
-        temp = temp + "=";
+        temp = temp + " = ";
         expect(TokenType::ASSIGNMENT);
 
         temp1 = E();
@@ -493,7 +495,7 @@ string parser::Initializer2()
         {
             temp1 = helper(temp1);
         }
-        temp = temp + temp1;
+        temp = temp + temp1 + " ;";
     }
     return temp;
 }
@@ -515,7 +517,7 @@ string parser::EXP1()
     }
 
 
-    temp = temp + temp1 + temp2;
+    temp = temp + " " + temp1 + " " + temp2;
 
     return temp;
 }
@@ -711,14 +713,14 @@ string parser::update(vector<string> tokenE)  // this function splits the expres
             if (tokenE[i] == "/")
             {
                 string temp2 = "t" + to_string(index); index++;
-                string temp = temp2 + "=";
-                temp = temp + tokenE[i-1] + tokenE[i] + tokenE[i+1];
+                string temp = temp2 + " = ";
+                temp = temp + tokenE[i-1] + " " + tokenE[i] + " " + tokenE[i+1] + " ;";
 
                 tokenE[i] = temp2;
                 tokenE[i-1] = "";
                 tokenE[i+1] = "";
 
-                TAC.push_back(to_string(this->n) + " " + temp);
+                TAC.push_back( temp);
                 n++; flag = true;
                 break; 
             }
@@ -748,14 +750,14 @@ string parser::update(vector<string> tokenE)  // this function splits the expres
             if (tokenE[i] == "*")
             {
                 string temp2 = "t" + to_string(index); index++;
-                string temp = temp2 + "=";
-                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+                string temp = temp2 + " = ";
+                temp = temp + tokenE[i - 1] + " " + tokenE[i] + " " + tokenE[i + 1] + " ;";
 
                 tokenE[i] = temp2;
                 tokenE[i - 1] = "";
                 tokenE[i + 1] = "";
 
-                TAC.push_back(to_string(this->n) + " " + temp);
+                TAC.push_back( temp);
                 n++; flag = true;
                 break;
             }
@@ -785,14 +787,14 @@ string parser::update(vector<string> tokenE)  // this function splits the expres
             if (tokenE[i] == "+")
             {
                 string temp2 = "t" + to_string(index); index++;
-                string temp = temp2 + "=";
-                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+                string temp = temp2 + " = ";
+                temp = temp + tokenE[i - 1] + " " + tokenE[i] + " " + tokenE[i + 1] + " ;";
 
                 tokenE[i] = temp2;
                 tokenE[i - 1] = "";
                 tokenE[i + 1] = "";
 
-                TAC.push_back(to_string(this->n) + " " + temp);
+                TAC.push_back( temp);
                 n++; flag = true;
                 break;
             }
@@ -822,14 +824,14 @@ string parser::update(vector<string> tokenE)  // this function splits the expres
             if (tokenE[i] == "-")
             {
                 string temp2 = "t" + to_string(index); index++;
-                string temp = temp2 + "=";
-                temp = temp + tokenE[i - 1] + tokenE[i] + tokenE[i + 1];
+                string temp = temp2 + " = ";
+                temp = temp + tokenE[i - 1] + " "+ tokenE[i] + " " + tokenE[i + 1] + " ;";
 
                 tokenE[i] = temp2;
                 tokenE[i - 1] = "";
                 tokenE[i + 1] = "";
 
-                TAC.push_back(to_string(this->n) + " " + temp);
+                TAC.push_back( temp);
                 n++; flag = true;
                 break;
             }

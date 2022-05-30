@@ -503,10 +503,10 @@ void lexer::generateSymbolTableFile()
 {
     ofstream file;
     file.open("symbol_table.txt");
-
+    int adress = 20;// intial 15 adresses are reserved
     for (auto itr = this->SymbolT.begin(); itr != this->SymbolT.end(); itr++)
     {
-        file << itr.operator*().identifer << "\t " << itr.operator*().value << "\t " << itr.operator*().type << endl;
+        file << itr.operator*().identifer << "\t " << itr.operator*().value << "\t " << itr.operator*().type<<"\t " <<adress++ <<endl;
     }
     file.close();
 }

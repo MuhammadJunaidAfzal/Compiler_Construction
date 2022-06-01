@@ -61,7 +61,7 @@ void populate_ST()
 	temp.adreess = 2;
 	temp.type = "operator";
 	temp.value = "";
-	symboltable.push_back(temp);
+	symboltable.push_back(temp);	
 
 	temp.identifer = ">";
 	temp.adreess = 3;
@@ -127,10 +127,7 @@ void populate_ST()
 		symboltable.push_back(temp);
 		new_adreees++;
 	}
-	file.close();
-
-
-	
+	file.close();	
 }
 int get_adresses(string str)
 {
